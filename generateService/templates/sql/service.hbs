@@ -1,0 +1,30 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Create{{ServiceName}}Dto } from './dto/create-{{serviceName}}.dto';
+import { {{ServiceName}} } from './entities/{{serviceName}}.entity';
+
+@Injectable()
+export class {{ServiceName}}Service {
+  constructor(
+    @InjectRepository({{ServiceName}})
+    private {{serviceName}}Repository: Repository<{{ServiceName}}>,
+  ) {}
+
+  async create(create{{ServiceName}}Dto: Create{{ServiceName}}Dto): Promise<{{ServiceName}}> {
+    const {{serviceName}} = this.{{serviceName}}Repository.create(create{{ServiceName}}Dto);
+    return this.{{serviceName}}Repository.save({{serviceName}});
+  }
+
+  async findAll(): Promise<{{ServiceName}}[]> {
+    return this.{{serviceName}}Repository.find();
+  }
+
+  async findOne(id: string): Promise<{{ServiceName}}> {
+    return this.{{serviceName}}Repository.findOne({ where: { id } });
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.{{serviceName}}Repository.delete(id);
+  }
+}

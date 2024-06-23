@@ -1,0 +1,25 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { {{ServiceName}}Service } from './{{serviceName}}.service';
+import { {{ServiceName}}Controller } from './{{serviceName}}.controller';
+import { {{ServiceName}} } from './entities/{{serviceName}}.entity';
+
+@Module({
+  imports: [TypeOrmModule.forRoot({
+    type: '{{db}}',
+    {{#if (eq db "sqlite")}}
+    database: '{{dbName}}.sqlite',
+    {{else}}
+    host: '{{dbHost}}',
+    port: {{dbPort}},
+    username: '{{dbUsername}}',
+    password: '{{dbPassword}}',
+    database: '{{dbName}}',
+    {{/if}}
+    entities: [{{ServiceName}}],
+    synchronize: true,
+  }), TypeOrmModule.forFeature([{{ServiceName}}])],
+  controllers: [{{ServiceName}}Controller],
+  providers: [{{ServiceName}}Service],
+})
+export class {{ServiceName}}Module {}

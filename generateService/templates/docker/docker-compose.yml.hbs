@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: {{dbPort}}
+      DATABASE_USER: {{dbUsername}}
+      DATABASE_PASS: {{dbPassword}}
+      DATABASE_NAME: {{dbName}}
+    depends_on:
+      - db
+
+  db:
+    image: {{#if (eq db "sqlite")}}nouchka/sqlite3{{else if (eq db "postgres")}}postgres{{else if (eq db "mysql")}}mysql{{else}}mongo{{/if}}
+    environment:
+      POSTGRES_DB: {{dbName}}
+      POSTGRES_USER: {{dbUsername}}
+      POSTGRES_PASSWORD: {{dbPassword}}
+      MYSQL_DATABASE: {{dbName}}
+      MYSQL_USER: {{dbUsername}}
+      MYSQL_PASSWORD: {{dbPassword}}
+      MONGO_INITDB_DATABASE: {{dbName}}
+      MONGO_INITDB_ROOT_USERNAME: {{dbUsername}}
+      MONGO_INITDB_ROOT_PASSWORD: {{dbPassword}}
+    volumes:
+      - db-data:/var/lib/{{#if (eq db "sqlite")}}sqlite3{{else if (eq db "postgres")}}postgresql/data{{else if (eq db "mysql")}}mysql{{else}}mongodb/data{{/if}}
+
+volumes:
+  db-data:

@@ -1,0 +1,12 @@
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { {{ServiceName}}Service } from './{{serviceName}}.service';
+import { {{ServiceName}}Controller } from './{{serviceName}}.controller';
+import { {{ServiceName}}Schema } from './entities/{{serviceName}}.schema';
+
+@Module({
+  imports: [MongooseModule.forRoot('{{dbUri}}/{{dbName}}'), MongooseModule.forFeature([{ name: '{{ServiceName}}', schema: {{ServiceName}}Schema }])],
+  controllers: [{{ServiceName}}Controller],
+  providers: [{{ServiceName}}Service],
+})
+export class {{ServiceName}}Module {}

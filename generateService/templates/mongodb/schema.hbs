@@ -1,0 +1,15 @@
+import { Schema, Document, model } from 'mongoose';
+
+export const {{ServiceName}}Schema = new Schema({
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now },
+  {{serviceName}}_example: { type: String, required: true },
+});
+
+export interface {{ServiceName}} extends Document {
+  created: Date;
+  updated: Date;
+  {{serviceName}}_example: string;
+}
+
+export const {{ServiceName}}Model = model<{{ServiceName}}>('{{ServiceName}}', {{ServiceName}}Schema);
